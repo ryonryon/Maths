@@ -19,20 +19,25 @@ Question *question;
     if ([super init]) {
         _score = 0;
         [self generateRandomQuestion];
+        _startTime = [NSDate date];
     }
     return self;
 }
 
 - (void)generateRandomQuestion {
     
-    NSUInteger left = arc4random_uniform(90) + 10;
-    NSUInteger right = arc4random_uniform(90) + 10;
-    
-    question = [[Question alloc] initWithLeft: (int) left andRight: (int) right];
+    _left = arc4random_uniform(90) + 10;
+    _right = arc4random_uniform(90) + 10;
+    _answer = _left + _right;
 }
 
-- (Question *) getQuestion {
-    return question;
+- (NSInteger)answer {
+    _endTime = [NSDate date];
+    return _answer;
+}
+
+- (NSTimeInterval)answerTime {
+    return [_endTime timeIntervalSinceDate:_startTime];
 }
 
 @end

@@ -9,26 +9,28 @@
 #import <Foundation/Foundation.h>
 #import "AdditionQuestion.h"
 #import "ScoreKeeper.h"
+#import "QuestionManager.h"
 #import "Util.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
-        AdditionQuestion *additionQuestion = [[AdditionQuestion alloc] init];
         ScoreKeeper *scoreKeeper = [[ScoreKeeper alloc] init];
+        QuestionManager *questionManager = [[QuestionManager alloc] init];
         
         Boolean gameOn = YES;
         
         while (gameOn) {
             
-            Question *q = [additionQuestion getQuestion];
+            AdditionQuestion *additionQuestion = [[AdditionQuestion alloc] init];
+            [questionManager.questions addObject:additionQuestion];
             
-            NSString *answer = [Util getUserInputWidthMaxLength:255 AndPrompt:[NSString stringWithFormat:@"%d + %d ? ", q.right, q.left]];
+            NSString *answer = [Util getUserInputWidthMaxLength:255 AndPrompt:[NSString stringWithFormat:@"%d + %d ? ", additionQuestion.left, additionQuestion.right]];
             
             if ([answer isEqualToString:@"quit"]) {
                 break;
                 
-            } else if([answer integerValue] == q.answer) {
+            } else if(additionQuestion.answer == [answer integerValue]) {
                 NSLog(@"Right!");
                 scoreKeeper.right += 1;
             } else {
@@ -40,6 +42,7 @@ int main(int argc, const char * argv[]) {
         }
         
         NSLog(@"%@", scoreKeeper);
+        NSLog(@"%@", [questionManager timeOutput]);
     }
     return 0;
 }

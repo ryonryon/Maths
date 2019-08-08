@@ -9,16 +9,17 @@
 #import <Foundation/Foundation.h>
 #import "Question.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface AdditionQuestion : NSObject
 
 @property (nonatomic) int score;
+@property (nonatomic) NSInteger left;
+@property (nonatomic) NSInteger right;
+@property (nonatomic) NSInteger answer;
+@property (nonatomic) NSDate *startTime;
+@property (nonatomic) NSDate *endTime;
 
 - (instancetype)init;
 - (void)generateRandomQuestion;
-- (Question *) getQuestion;
+- (NSTimeInterval)answerTime;
 
 @end
-
-NS_ASSUME_NONNULL_END
